@@ -1,0 +1,95 @@
+# .goosehints for OBI (Ontology for Biomedical Investigations)
+
+## Project Overview
+The Ontology for Biomedical Investigations (OBI) is a comprehensive ontology that defines over 2500 terms for scientific investigations, including assays, devices, objectives, and related biomedical research concepts. This is the developer repository for OBI, which is part of the OBO Foundry.
+
+## Repository Structure
+- `obi.owl` - Main release file (latest version of OBI)
+- `src/ontology/` - Source files for ontology development
+  - `obi-edit.owl` - Main OBI OWL file for manual editing
+  - `templates/` - ROBOT template files (TSV format) for different OBI branches
+  - `modules/` - Generated modules from ROBOT templates
+- `views/` - Specialized views and formats (including obi.obo format)
+- `Makefile` - Build scripts and automation
+
+## Robot Templates Overview
+The `src/ontology/templates/` directory contains numerous TSV template files that define terms using the ROBOT template system. Key templates include:
+
+### Major Template Categories:
+
+1. **Assays** (`assays.tsv` - ~471KB, largest template)
+   - Comprehensive collection of biomedical assays
+   - Includes microscopy, chromatography, mass spectrometry assays
+   - Complex logical definitions with material processing, detection techniques
+   - Examples: fluorescence microscopy, LC-MS/MS, NMR assays
+
+2. **Devices** (`devices.tsv` - ~298KB)
+   - Laboratory instruments and equipment
+   - Chromatography equipment, mass spectrometers, NMR instruments
+   - Flow cytometers, sequencers, microscopes
+   - Examples: FACS machines, Illumina sequencers, various analytical instruments
+
+3. **Epitope Assays** (`epitope-assays.tsv` - ~255KB)
+   - Specialized immune epitope-related assays
+   - Immunological testing procedures
+
+4. **Administration** (`administration.tsv`)
+   - Drug/substance administration procedures
+   - Routes of administration (oral, intravenous, etc.)
+   - Administration techniques and objectives
+
+5. **Specimens** (`specimens.tsv`)
+   - Biological specimen types and collection procedures
+   - Sample preparation and handling
+
+6. **Study Designs** (`study-designs.tsv`)
+   - Research methodology and study design patterns
+   - Clinical trial designs and observational studies
+
+7. **Data Sets** (`data-sets.tsv`)
+   - Types of research data and data structures
+
+8. **Medical History** (`medical-history.tsv`)
+   - Medical history classifications and selection criteria
+
+9. **Value Specifications** (`value-specifications.tsv`)
+   - Measurement units, ranges, and value types
+
+10. **Biopsy** (`biopsy.tsv` - smaller template)
+    - Different types of biopsy procedures
+    - Needle biopsies, surgical biopsies, imaging-guided procedures
+
+### Template Structure Pattern:
+All templates follow a consistent column structure:
+- `ontology ID` - OBI term identifier (e.g., OBI:0000123)
+- `label` - Primary term name
+- `definition` - Formal definition with source
+- `alternative label` - Synonyms and alternative names
+- `parent class` - Hierarchical relationships
+- Logical definition columns (varies by template type)
+- Curation metadata (editor, status, notes)
+
+## Development Workflow
+
+### Viewing github issues
+
+You can view issues like this:
+
+`gh issue view NNN --repo obi-ontology/obi`
+
+But you should NEVER try and update an issue or make a commit or PR.
+
+### Term Editing Approaches:
+
+You should use robot-mcp to edit the template TSVs. There is no need to edit any other file generally.
+
+For new terms, ALWAYS use IDs in the OBI:07xxxxx range
+
+After making edits to a template TSV, you can compile the corresponding OWL, to check for validity.
+E.g. if you edit `FOO.tsv`, then try:
+
+`make src/ontology/modules/FOO.owl`
+
+This should be done from the `obi` folder
+
+Note this may not work on all platforms, check with the user before installing new software.
